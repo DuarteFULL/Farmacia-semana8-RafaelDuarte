@@ -14,7 +14,7 @@ public class Farmacia8Application  implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Projeto Spring teste");
-		throw new UnsupportedOperationException("Unimplemented method 'run'");
+		//throw new UnsupportedOperationException("Unimplemented method 'run'");
 	}
 
 }
