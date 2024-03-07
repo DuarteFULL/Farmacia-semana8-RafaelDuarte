@@ -1,6 +1,5 @@
 package br.com.farmacia.farmacia8.modelo;
 
-import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,10 +17,8 @@ public class Produto {
 	private int id;
 	private String nome;
 	private String descricao;
-	private float preco;
-    private LocalDate create_time = LocalDate.now();
-	private boolean ativo;
-	
+	private double preco;
+    	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Fabricante fabricante;
 	
@@ -33,11 +30,6 @@ public class Produto {
 		this.descricao = descricao;
 		this.preco = preco;
 		this.fabricante = fabricante;
-		this.ativo = true;
-	}
-
-	public boolean isAtivo() {
-		return ativo;
 	}
 
 	public int getId() {
@@ -64,20 +56,12 @@ public class Produto {
 		this.descricao = descricao;
 	}
 
-	public Float getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Float preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
-	}
-
-	public LocalDate getDataCadastro() {
-		return create_time;
-	}
-
-	public void setDataCadastro(LocalDate dataCadastro) {
-		this.create_time = dataCadastro;
 	}
 
 	public Fabricante getFabricante() {
@@ -91,7 +75,7 @@ public class Produto {
 	@Override
 	public String toString() {
 		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", preco=" + preco
-				+ ", create_time=" + create_time + ", fabricante=" + fabricante + "]";
+				+ ", create_time=, fabricante=" + fabricante + "]";
 	}
 
 	
