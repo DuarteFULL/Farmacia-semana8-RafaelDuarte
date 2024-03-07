@@ -2,15 +2,23 @@ package br.com.farmacia.farmacia8;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+//import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import br.com.farmacia.farmacia8.modelo.Fabricante;
+import br.com.farmacia.farmacia8.modelo.Produto;
+import br.com.farmacia.farmacia8.repository.ProdutoRepository;
 
 
 @SpringBootApplication
-@EntityScan(basePackages = "br.com.farmacia.farmacia8.modelo")
+//@EntityScan(basePackages = "br.com.farmacia.farmacia8.modelo")
 public class Farmacia8Application  implements CommandLineRunner {
+
+    @Autowired
+    private static ProdutoRepository repository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Farmacia8Application.class, args);
@@ -28,13 +36,13 @@ public class Farmacia8Application  implements CommandLineRunner {
             try {
                 switch (opcao) {
                     case 1:
-                        //listarProdutos();
+                        listarProdutos();
                         break;
                     case 2:
-                        //cadastrarProduto();
+                        cadastrarProduto();
                         break;
                     case 3:
-                        //deletarProduto();
+                        deletarProduto();
                         break;
                     case 4:
                         //consultarProduto();
@@ -75,5 +83,108 @@ public class Farmacia8Application  implements CommandLineRunner {
                 """);
         return teclado.nextInt();
     }
+
+    public static void cadastrarProduto() {
+	 	System.out.println("Digite o nome do produto:");
+        var nomeDoProduto = teclado.next();
+
+        System.out.println("Digite a descrição do produto:");
+        var descricaoDoProduto = teclado.next();
+
+        System.out.println("Digite o valor do produto:");
+        var valorDoProduto = teclado.nextFloat();        
+
+        System.out.println("Digite o fabricante do produto:");
+        var fabricanteDoProduto = teclado.next();        
+        
+        Fabricante fabricante = new Fabricante(fabricanteDoProduto);
+	 	Produto produto = new Produto(nomeDoProduto, descricaoDoProduto, valorDoProduto, fabricante);
+
+        repository.save(produto);
+
+    //     ProdutoService pService = new ProdutoService();
+    //     pService.cadastrarProduto(fabricante, produto);
+
+        System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal");
+        teclado.next();
+	}
+    
+    private static void listarProdutos() {
+        System.out.println("Produtos cadastrados:");
+
+    //     ProdutoService pService = new ProdutoService();
+
+    //     pService.listarProdutos();
+
+        System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
+        teclado.next();
+    }
+    
+    private static void deletarProduto() {
+        System.out.print("Digite o nome do produto a ser deletado: ");
+        var nomeDoProduto = teclado.next();
+    //     ProdutoService pService = new ProdutoService();
+
+    //     pService.deletarPorNome(nomeDoProduto);
+        
+        System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
+        teclado.next();
+    }
+
+    // private static void consultarProduto() {
+    //     System.out.print("Digite o nome do produto para consulta: ");
+    //     var nomeDoProduto = teclado.next();
+
+    //     ProdutoService pService = new ProdutoService();
+    //     pService.buscarProdutoPorNome(nomeDoProduto);
+    
+    //     System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
+    //     teclado.next();
+    // }
+
+    // private static void alterarValorProduto() {
+    //     System.out.print("Digite o nome do produto: ");
+    //     var nomeDoProduto = teclado.next();
+    //     System.out.print("Digite o novo valor do produto: ");
+    //     var valorDoProduto = teclado.nextFloat();
+
+    //     ProdutoService pService = new ProdutoService();
+
+    //     pService.alterarValor(nomeDoProduto, valorDoProduto);
+
+    //     System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
+    //     teclado.next();
+    // }
+
+    // private static void alterarFabricanteProduto() {
+    //     System.out.print("Digite o nome do produto: ");
+    //     var nomeDoProduto = teclado.next();
+    //     System.out.print("Digite o novo fabricante do produto: ");
+    //     var fabricanteDoProduto = teclado.next();
+
+    //     ProdutoService pService = new ProdutoService();
+    //     Fabricante fabricante = new Fabricante(fabricanteDoProduto);
+        
+    //     pService.alterarFabricante(nomeDoProduto, fabricante);
+
+    //     System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal");
+    //     teclado.next();
+    // }
+
+    // private static void alterarDescricaoProduto() {
+    //     System.out.print("Digite o nome do produto: ");
+    //     var nomeDoProduto = teclado.next();
+    //     System.out.print("Digite a nova descrição do produto: ");
+    //     var descricaoDoProduto = teclado.next();
+
+    //     ProdutoService pService = new ProdutoService();
+
+    //     pService.alterarDescricao(nomeDoProduto, descricaoDoProduto);
+
+    //     System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
+    //     teclado.next();
+    // }
+
+
 
 }
