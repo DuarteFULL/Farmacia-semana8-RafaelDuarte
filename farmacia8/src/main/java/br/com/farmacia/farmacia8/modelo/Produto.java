@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 // import javax.persistence.Entity;
 // import javax.persistence.FetchType;
@@ -27,7 +28,9 @@ public class Produto {
 	private String descricao;
 	private double preco;
     	
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	//@ManyToOne(fetch = FetchType.LAZY)
+	@Transient
 	private Fabricante fabricante;
 	
 	public Produto() {
