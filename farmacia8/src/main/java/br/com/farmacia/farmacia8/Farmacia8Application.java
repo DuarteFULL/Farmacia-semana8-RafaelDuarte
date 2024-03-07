@@ -1,189 +1,36 @@
 package br.com.farmacia.farmacia8;
 
-import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import br.com.farmacia.farmacia8.modelo.Fabricante;
-import br.com.farmacia.farmacia8.modelo.Produto;
+import br.com.farmacia.farmacia8.repository.FabricanteRepository;
 import br.com.farmacia.farmacia8.repository.ProdutoRepository;
 
 
 @SpringBootApplication
-//@EntityScan(basePackages = "br.com.farmacia.farmacia8.modelo")
 public class Farmacia8Application  implements CommandLineRunner {
 
     @Autowired
-    private static ProdutoRepository repository;
+    private ProdutoRepository proRepository;
+
+    @Autowired
+    private FabricanteRepository fabRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Farmacia8Application.class, args);
 	}
 
-	private static Scanner teclado = new Scanner(System.in);
 
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("Projeto Spring teste");
 		//throw new UnsupportedOperationException("Unimplemented method 'run'");
-		var opcao = Menu();
-
-        while (opcao != 8) {
-            try {
-                switch (opcao) {
-                    case 1:
-                        listarProdutos();
-                        break;
-                    case 2:
-                        cadastrarProduto();
-                        break;
-                    case 3:
-                        deletarProduto();
-                        break;
-                    case 4:
-                        //consultarProduto();
-                        break;
-                    case 5:
-                        //alterarValorProduto();
-                        break;
-                    case 6:
-                        //alterarFabricanteProduto();
-                    case 7:
-                        //alterarDescricaoProduto();
-                }
-            } catch (Exception e){//RegraDenegocioException e) {
-                System.out.println("Erro: " +e.getMessage());
-                System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu");
-                teclado.next();
-            }
-
-            opcao = Menu();
-
-        }
-
-        System.out.println("Finalizando a aplicação.");
-	}   
-
-
-	private static int Menu() {
-        System.out.println("""
-                FARMÁCIA - ESCOLHA UMA OPÇÃO:
-                1 - Listar produtos
-                2 - Cadastrar produto
-                3 - Deletar produto
-                4 - Consultar produto
-                5 - Alterar valor do produto
-                6 - Alterar fabricante do produto 
-                7 - Alterar descrição do produto
-                8 - Sair
-                """);
-        return teclado.nextInt();
+        Principal principal = new Principal(proRepository);
+        principal.exibeMenu();
     }
-
-    public static void cadastrarProduto() {
-	 	System.out.println("Digite o nome do produto:");
-        var nomeDoProduto = teclado.next();
-
-        System.out.println("Digite a descrição do produto:");
-        var descricaoDoProduto = teclado.next();
-
-        System.out.println("Digite o valor do produto:");
-        var valorDoProduto = teclado.nextFloat();        
-
-        System.out.println("Digite o fabricante do produto:");
-        var fabricanteDoProduto = teclado.next();        
-        
-        Fabricante fabricante = new Fabricante(fabricanteDoProduto);
-	 	Produto produto = new Produto(nomeDoProduto, descricaoDoProduto, valorDoProduto, fabricante);
-
-        repository.save(produto);
-
-    //     ProdutoService pService = new ProdutoService();
-    //     pService.cadastrarProduto(fabricante, produto);
-
-        System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal");
-        teclado.next();
-	}
-    
-    private static void listarProdutos() {
-        System.out.println("Produtos cadastrados:");
-
-    //     ProdutoService pService = new ProdutoService();
-
-    //     pService.listarProdutos();
-
-        System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
-        teclado.next();
-    }
-    
-    private static void deletarProduto() {
-        System.out.print("Digite o nome do produto a ser deletado: ");
-        var nomeDoProduto = teclado.next();
-    //     ProdutoService pService = new ProdutoService();
-
-    //     pService.deletarPorNome(nomeDoProduto);
-        
-        System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
-        teclado.next();
-    }
-
-    // private static void consultarProduto() {
-    //     System.out.print("Digite o nome do produto para consulta: ");
-    //     var nomeDoProduto = teclado.next();
-
-    //     ProdutoService pService = new ProdutoService();
-    //     pService.buscarProdutoPorNome(nomeDoProduto);
-    
-    //     System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
-    //     teclado.next();
-    // }
-
-    // private static void alterarValorProduto() {
-    //     System.out.print("Digite o nome do produto: ");
-    //     var nomeDoProduto = teclado.next();
-    //     System.out.print("Digite o novo valor do produto: ");
-    //     var valorDoProduto = teclado.nextFloat();
-
-    //     ProdutoService pService = new ProdutoService();
-
-    //     pService.alterarValor(nomeDoProduto, valorDoProduto);
-
-    //     System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
-    //     teclado.next();
-    // }
-
-    // private static void alterarFabricanteProduto() {
-    //     System.out.print("Digite o nome do produto: ");
-    //     var nomeDoProduto = teclado.next();
-    //     System.out.print("Digite o novo fabricante do produto: ");
-    //     var fabricanteDoProduto = teclado.next();
-
-    //     ProdutoService pService = new ProdutoService();
-    //     Fabricante fabricante = new Fabricante(fabricanteDoProduto);
-        
-    //     pService.alterarFabricante(nomeDoProduto, fabricante);
-
-    //     System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal");
-    //     teclado.next();
-    // }
-
-    // private static void alterarDescricaoProduto() {
-    //     System.out.print("Digite o nome do produto: ");
-    //     var nomeDoProduto = teclado.next();
-    //     System.out.print("Digite a nova descrição do produto: ");
-    //     var descricaoDoProduto = teclado.next();
-
-    //     ProdutoService pService = new ProdutoService();
-
-    //     pService.alterarDescricao(nomeDoProduto, descricaoDoProduto);
-
-    //     System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
-    //     teclado.next();
-    // }
+		
 
 
 
