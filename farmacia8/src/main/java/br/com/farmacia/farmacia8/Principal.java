@@ -1,5 +1,6 @@
 package br.com.farmacia.farmacia8;
 
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.stereotype.Service;
@@ -104,10 +105,13 @@ public class Principal {
     private static void listarProdutos() {
         System.out.println("Produtos cadastrados:");
 
-        Produto pResultado = new Produto();
-        pRepository.findById((long)1).toString();
+        List<Produto> todos = pRepository.findAll();
 
-        System.out.println(pRepository.findById((long) 1));
+        if(todos.size() != 0){
+            todos.forEach(p2 -> System.out.println(p2.toString()));
+        } else {
+            System.out.println("\nNão existe nenhum produto cadastrado.");
+        }
     
         System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
         teclado.next();
@@ -127,6 +131,8 @@ public class Principal {
     private static void consultarProduto() {
         System.out.print("Digite o nome do produto para consulta: ");
         var nomeDoProduto = teclado.next();
+
+        
 
     //    ProdutoService pService = new ProdutoService();
     //    pService.buscarProdutoPorNome(nomeDoProduto);
