@@ -27,7 +27,7 @@ public class Farmacia8Application  implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		System.out.println("Projeto Spring teste");
 		//throw new UnsupportedOperationException("Unimplemented method 'run'");
-        Principal principal = new Principal(proRepository);
+        Principal principal = new Principal(proRepository, fabRepository);
         principal.exibeMenu();
     }
 		

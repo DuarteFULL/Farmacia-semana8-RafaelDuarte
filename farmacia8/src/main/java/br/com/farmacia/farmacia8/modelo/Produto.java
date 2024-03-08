@@ -29,8 +29,8 @@ public class Produto {
 	private double preco;
     	
 	
-	//@ManyToOne(fetch = FetchType.LAZY)
-	@Transient
+	@ManyToOne(fetch = FetchType.LAZY)
+	//@Transient
 	private Fabricante fabricante;
 	
 	public Produto() {

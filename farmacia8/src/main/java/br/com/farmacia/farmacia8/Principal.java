@@ -2,17 +2,23 @@ package br.com.farmacia.farmacia8;
 
 import java.util.Scanner;
 
+import org.springframework.stereotype.Service;
+
 import br.com.farmacia.farmacia8.modelo.Fabricante;
 import br.com.farmacia.farmacia8.modelo.Produto;
+import br.com.farmacia.farmacia8.repository.FabricanteRepository;
 import br.com.farmacia.farmacia8.repository.ProdutoRepository;
 
+@Service
 public class Principal {
 
     private static Scanner teclado = new Scanner(System.in);
-    private static ProdutoRepository repository; 
+    private static ProdutoRepository pRepository; 
+    private static FabricanteRepository fRepository;
 
-    public Principal(ProdutoRepository proRepository) {
-        this.repository = proRepository;
+    public Principal(ProdutoRepository proRepository, FabricanteRepository fabRepository) {
+        this.pRepository = proRepository;
+        this.fRepository = fabRepository;
     }
 
 
@@ -36,7 +42,7 @@ public class Principal {
                         //consultarProduto();
                         break;
                     case 5:
-                        //alterarValorProduto();
+                        alterarValorProduto();
                         break;
                     case 6:
                         //alterarFabricanteProduto();
@@ -88,10 +94,8 @@ public class Principal {
         Fabricante fabricante = new Fabricante(fabricanteDoProduto);
 	 	Produto produto = new Produto(nomeDoProduto, descricaoDoProduto, valorDoProduto, fabricante);
 
-        repository.save(produto);
-
-    //     ProdutoService pService = new ProdutoService();
-    //     pService.cadastrarProduto(fabricante, produto);
+        fRepository.save(fabricante);
+        pRepository.save(produto);
 
         System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal");
         teclado.next();
@@ -100,10 +104,11 @@ public class Principal {
     private static void listarProdutos() {
         System.out.println("Produtos cadastrados:");
 
-    //     ProdutoService pService = new ProdutoService();
+        Produto pResultado = new Produto();
+        pRepository.findById((long)1).toString();
 
-    //     pService.listarProdutos();
-
+        System.out.println(pRepository.findById((long) 1));
+    
         System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
         teclado.next();
     }
@@ -119,30 +124,39 @@ public class Principal {
         teclado.next();
     }
 
-    // private static void consultarProduto() {
-    //     System.out.print("Digite o nome do produto para consulta: ");
-    //     var nomeDoProduto = teclado.next();
+    private static void consultarProduto() {
+        System.out.print("Digite o nome do produto para consulta: ");
+        var nomeDoProduto = teclado.next();
 
-    //     ProdutoService pService = new ProdutoService();
-    //     pService.buscarProdutoPorNome(nomeDoProduto);
+    //    ProdutoService pService = new ProdutoService();
+    //    pService.buscarProdutoPorNome(nomeDoProduto);
     
-    //     System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
-    //     teclado.next();
-    // }
+        System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
+        teclado.next();
+    }
 
-    // private static void alterarValorProduto() {
-    //     System.out.print("Digite o nome do produto: ");
-    //     var nomeDoProduto = teclado.next();
-    //     System.out.print("Digite o novo valor do produto: ");
-    //     var valorDoProduto = teclado.nextFloat();
+    private static void alterarValorProduto() {
+        System.out.print("Id do produto a ser alterado: ");
+        var idDoProduto = teclado.nextInt();
+        System.out.print("Digite o novo valor do produto: ");
+        var valorDoProduto = teclado.nextDouble();
 
-    //     ProdutoService pService = new ProdutoService();
+        Produto produto = new Produto();
 
-    //     pService.alterarValor(nomeDoProduto, valorDoProduto);
+        produto.setId(idDoProduto);
+        produto.setPreco(valorDoProduto);
 
-    //     System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
-    //     teclado.next();
-    // }
+        //produto = pRepository.getReferenceById((long)idDoProduto);
+        produto.toString();
+
+        //esta com erro, esta salvando os dados novos e deltando os antigos.
+        pRepository.save(produto);
+
+        
+
+        System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
+        teclado.next();
+    }
 
     // private static void alterarFabricanteProduto() {
     //     System.out.print("Digite o nome do produto: ");
