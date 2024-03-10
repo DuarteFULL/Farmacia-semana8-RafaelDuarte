@@ -105,6 +105,8 @@ public class Principal {
     private static void listarProdutos() {
         System.out.println("Produtos cadastrados:");
 
+
+        List<Fabricante> todosFab = fRepository.findAll();
         List<Produto> todos = pRepository.findAll();
 
         if(todos.size() != 0){
@@ -118,11 +120,10 @@ public class Principal {
     }
     
     private static void deletarProduto() {
-        System.out.print("Digite o nome do produto a ser deletado: ");
-        var nomeDoProduto = teclado.next();
-    //     ProdutoService pService = new ProdutoService();
+        System.out.print("Digite o ID do produto a ser deletado: ");
+        var idDoProduto= teclado.nextInt();
+        pRepository.deleteById((long) idDoProduto);
 
-    //     pService.deletarPorNome(nomeDoProduto);
         
         System.out.println("\nPressione qualquer tecla e de ENTER para voltar ao menu principal");
         teclado.next();
