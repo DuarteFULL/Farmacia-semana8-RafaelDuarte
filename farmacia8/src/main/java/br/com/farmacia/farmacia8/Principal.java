@@ -1,6 +1,7 @@
 package br.com.farmacia.farmacia8;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -121,20 +122,16 @@ public class Principal {
     }
 
     public static void alterarDescricaoProduto() {
-        //ESSE METODO ESTA COM ERRO, É NECESSÁRIO REFATORAR.
         System.out.println("Digite o ID do produto a ser alterado: ");
         var idDoProduto = teclado.nextInt();
 
         System.out.println("Digite a nova descrição do produto:");
         var descricaoDoProduto = teclado.next();
 
-        Produto produto = new Produto();
-        produto.setId(idDoProduto);
-        produto.setDescricao(descricaoDoProduto);
+        Produto saved = pRepository.findById((long) idDoProduto).orElseThrow(NoSuchElementException::new);
+        saved.setDescricao(descricaoDoProduto);
 
-        System.out.println(pRepository.findById((long) idDoProduto));
-
-        pRepository.save(produto);
+        pRepository.save(saved);
 
         System.out.println("Pressione qualquer tecla e de ENTER para voltar ao menu principal");
         teclado.next();
